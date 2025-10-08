@@ -1,4 +1,4 @@
-name: Deploy Backend to Render
+name: CI/CD Pipeline - Deploy to Render
 
 on:
   push:
@@ -22,10 +22,10 @@ jobs:
           cache: 'maven'
 
       - name: Build with Maven
-        run: ./mvnw clean package -DskipTests
+        run: mvn clean package -DskipTests
 
       - name: Run tests
-        run: ./mvnw test
+        run: mvn test
 
   deploy:
     needs: build
@@ -33,6 +33,13 @@ jobs:
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
 
     steps:
-      - name: Deploy to Render
+      - name: Trigger Render Deploy
         run: |
           curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK }}"
+
+      - name: Wait for deployment
+        run: sleep 30
+
+      - name: Check deployment status
+        run: |
+          echo "Deployment triggered! Check https://dashboard.render.com for status"
