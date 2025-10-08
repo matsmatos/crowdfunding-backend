@@ -18,22 +18,28 @@ REST API para plataforma de financiamento coletivo usando **Spring Boot 3** + **
 - **Swagger/OpenAPI**
 - **Lombok**
 
-## 🏗️ Estrutura do Projeto
+## 🏗️ Estrutura do Projeto (Clean Architecture)
 
 ```
 src/
 ├── main/
 │   ├── java/com/crowdfunding/
-│   │   ├── config/          # Configurações (Security, JDBI, CORS)
-│   │   ├── controller/      # Controllers REST
-│   │   ├── service/         # Lógica de negócio
-│   │   ├── repository/      # DAOs com JDBI
-│   │   ├── model/           # Entidades
-│   │   ├── dto/             # DTOs
-│   │   └── security/        # JWT e autenticação
+│   │   ├── domain/                    # Camada de Domínio
+│   │   │   ├── entity/                # Entidades de negócio
+│   │   │   ├── repository/            # Interfaces de repositório
+│   │   │   └── exception/             # Exceções de domínio
+│   │   ├── application/               # Camada de Aplicação
+│   │   │   ├── usecase/               # Casos de uso
+│   │   │   └── dto/                   # DTOs da aplicação
+│   │   ├── infrastructure/            # Camada de Infraestrutura
+│   │   │   ├── repository/            # Implementações JDBI
+│   │   │   └── config/                # Configurações (Security, JDBI)
+│   │   └── presentation/              # Camada de Apresentação
+│   │       ├── controller/            # Controllers REST
+│   │       └── exception/             # Exception handlers
 │   └── resources/
-│       ├── application.yml  # Configurações da aplicação
-│       └── db/migration/    # Scripts SQL
+│       ├── application.yml            # Configurações da aplicação
+│       └── db/migration/              # Scripts SQL
 ```
 
 ## ⚙️ Configuração

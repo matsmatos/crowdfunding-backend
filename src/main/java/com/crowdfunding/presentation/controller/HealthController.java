@@ -1,4 +1,4 @@
-package com.crowdfunding.controller;
+package com.crowdfunding.presentation.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
