@@ -1,4 +1,4 @@
-package com.crowdfunding.config;
+package com.crowdfunding.infrastructure.config;
 
 import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.sqlobject.SqlObjectPlugin;
