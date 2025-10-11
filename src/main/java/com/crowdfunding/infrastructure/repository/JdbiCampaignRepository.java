@@ -57,6 +57,25 @@ public class JdbiCampaignRepository implements CampaignRepository {
     }
 
     @Override
+    public List<Campaign> findAll(int page, int size) {
+        int offset = page * size;
+        return jdbi.withHandle(handle ->
+                handle.createQuery("SELECT * FROM campaigns ORDER BY created_at DESC LIMIT :limit OFFSET :offset")
+                        .bind("limit", size)
+                        .bind("offset", offset)
+                        .mapToBean(Campaign.class)
+                        .list());
+    }
+
+    @Override
+    public int countAll() {
+        return jdbi.withHandle(handle ->
+                handle.createQuery("SELECT COUNT(*) FROM campaigns")
+                        .mapTo(Integer.class)
+                        .one());
+    }
+
+    @Override
     public List<Campaign> findByUserId(Long userId) {
         return jdbi.withHandle(handle ->
                 handle.createQuery("SELECT * FROM campaigns WHERE user_id = :userId ORDER BY created_at DESC")

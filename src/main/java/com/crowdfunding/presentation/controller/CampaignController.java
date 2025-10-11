@@ -1,6 +1,7 @@
 package com.crowdfunding.presentation.controller;
 
 import com.crowdfunding.application.dto.CreateCampaignDTO;
+import com.crowdfunding.application.dto.PageResponse;
 import com.crowdfunding.application.usecase.CreateCampaignUseCase;
 import com.crowdfunding.application.usecase.GetCampaignUseCase;
 import com.crowdfunding.domain.entity.Campaign;
@@ -30,9 +31,11 @@ public class CampaignController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Campaign>> getAll() {
-        List<Campaign> campaigns = getCampaignUseCase.getAll();
-        return ResponseEntity.ok(campaigns);
+    public ResponseEntity<PageResponse<Campaign>> getAll(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        PageResponse<Campaign> response = getCampaignUseCase.getAllPaginated(page, size);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")

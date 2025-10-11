@@ -1,5 +1,6 @@
 package com.crowdfunding.application.usecase;
 
+import com.crowdfunding.application.dto.PageResponse;
 import com.crowdfunding.domain.entity.Campaign;
 import com.crowdfunding.domain.exception.ResourceNotFoundException;
 import com.crowdfunding.domain.repository.CampaignRepository;
@@ -26,6 +27,13 @@ public class GetCampaignUseCase {
     @Transactional(readOnly = true)
     public List<Campaign> getAll() {
         return campaignRepository.findAll();
+    }
+
+    @Transactional(readOnly = true)
+    public PageResponse<Campaign> getAllPaginated(int page, int size) {
+        List<Campaign> campaigns = campaignRepository.findAll(page, size);
+        int totalElements = campaignRepository.countAll();
+        return new PageResponse<>(campaigns, totalElements, size, page);
     }
 
     @Transactional(readOnly = true)

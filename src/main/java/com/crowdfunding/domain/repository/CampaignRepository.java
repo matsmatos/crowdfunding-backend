@@ -9,6 +9,8 @@ public interface CampaignRepository {
     Campaign save(Campaign campaign);
     Optional<Campaign> findById(Long id);
     List<Campaign> findAll();
+    List<Campaign> findAll(int page, int size);
+    int countAll();
     List<Campaign> findByUserId(Long userId);
     void update(Campaign campaign);
     void deleteById(Long id);
